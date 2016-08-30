@@ -145,7 +145,7 @@ BlocklyInterface.saveToLocalStorage = function() {
   if (typeof Blockly == undefined || !window.localStorage) {
     return;
   }
-  var name = BlocklyGames.NAME + BlocklyGames.LEVEL;
+  var name = BlocklyGames.NAME;
   window.localStorage[name] = BlocklyInterface.getCode();
 };
 

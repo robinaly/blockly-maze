@@ -128,101 +128,87 @@ Maze.map = [
 // Level 0.
  undefined,
 // Level 1.
- [[0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 2, 1, 3, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0]],
-// Level 2.
- [[0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 1, 3, 0, 0, 0],
-  [0, 0, 2, 1, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0]],
-// Level 3.
- [[0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 2, 1, 1, 1, 1, 3, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0]],
-// Level 4.
-/**
- * Note, the path continues past the start and the goal in both directions.
- * This is intentionally done so users see the maze is about getting from
- * the start to the goal and not necessarily about moving over every part of
- * the maze, 'mowing the lawn' as Neil calls it.
- */
- [[0, 0, 0, 0, 0, 0, 0, 1],
-  [0, 0, 0, 0, 0, 0, 1, 1],
-  [0, 0, 0, 0, 0, 3, 1, 0],
-  [0, 0, 0, 0, 1, 1, 0, 0],
-  [0, 0, 0, 1, 1, 0, 0, 0],
-  [0, 0, 1, 1, 0, 0, 0, 0],
-  [0, 2, 1, 0, 0, 0, 0, 0],
-  [1, 1, 0, 0, 0, 0, 0, 0]],
-// Level 5.
- [[0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 3, 0, 0],
-  [0, 0, 0, 0, 0, 1, 0, 0],
-  [0, 0, 0, 0, 0, 1, 0, 0],
-  [0, 0, 0, 0, 0, 1, 0, 0],
-  [0, 0, 0, 0, 0, 1, 0, 0],
-  [0, 0, 0, 2, 1, 1, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0]],
-// Level 6.
- [[0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 1, 1, 1, 1, 1, 0, 0],
-  [0, 1, 0, 0, 0, 1, 0, 0],
-  [0, 1, 1, 3, 0, 1, 0, 0],
-  [0, 0, 0, 0, 0, 1, 0, 0],
-  [0, 2, 1, 1, 1, 1, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0]],
-// Level 7.
- [[0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 1, 1, 0],
-  [0, 2, 1, 1, 1, 1, 0, 0],
-  [0, 0, 0, 0, 0, 1, 1, 0],
-  [0, 1, 1, 3, 0, 1, 0, 0],
-  [0, 1, 0, 1, 0, 1, 0, 0],
-  [0, 1, 1, 1, 1, 1, 1, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0]],
-// Level 8.
- [[0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 1, 1, 1, 1, 0, 0, 0],
-  [0, 1, 0, 0, 1, 1, 0, 0],
-  [0, 1, 1, 1, 0, 1, 0, 0],
-  [0, 0, 0, 1, 0, 1, 0, 0],
-  [0, 2, 1, 1, 0, 3, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0]],
-// Level 9.
- [[0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 1, 1, 1, 1, 1, 0, 0],
-  [0, 0, 1, 0, 0, 0, 0, 0],
-  [3, 1, 1, 1, 1, 1, 1, 0],
-  [0, 1, 0, 1, 0, 1, 1, 0],
-  [1, 1, 1, 1, 1, 0, 1, 0],
-  [0, 1, 0, 1, 0, 2, 1, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0]],
-// Level 10.
- [[0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 1, 1, 0, 3, 0, 1, 0],
-  [0, 1, 1, 0, 1, 1, 1, 0],
-  [0, 1, 0, 1, 0, 1, 0, 0],
-  [0, 1, 1, 1, 1, 1, 1, 0],
-  [0, 0, 0, 1, 0, 0, 1, 0],
-  [0, 2, 1, 1, 1, 0, 1, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0]]
-][BlocklyGames.LEVEL];
+    [[1, 1, 1, 1, 1, 1, 1, 1],
+     [1, 0, 1, 0, 0, 0, 1, 0],
+     [1, 0, 0, 0, 1, 0, 1, 1],
+     [1, 1, 1, 0, 1, 1, 1, 0],
+     [1, 0, 1, 0, 0, 0, 3, 0],
+     [1, 0, 1, 1, 1, 0, 1, 1],
+     [1, 0, 0, 0, 1, 0, 1, 0],
+     [2, 1, 1, 1, 0, 1, 1, 1]],
+    [[1, 1, 1, 1, 1, 1, 0, 1],
+     [2, 0, 0, 0, 0, 1, 1, 1],
+     [1, 0, 1, 1, 0, 1, 0, 0],
+     [1, 0, 1, 0, 0, 1, 1, 1],
+     [1, 1, 1, 1, 1, 0, 0, 1],
+     [0, 0, 1, 0, 0, 1, 0, 1],
+     [1, 0, 1, 0, 0, 1, 1, 1],
+     [1, 1, 1, 1, 1, 0, 0, 3]],
+    [[1, 0, 1, 0, 2, 0, 3, 0],
+     [1, 1, 1, 1, 1, 1, 1, 1],
+     [1, 0, 1, 0, 0, 0, 0, 0],
+     [1, 0, 1, 1, 1, 1, 1, 1],
+     [1, 1, 0, 0, 0, 0, 0, 1],
+     [1, 0, 1, 1, 1, 1, 1, 0],
+     [1, 0, 0, 0, 1, 0, 1, 0],
+     [1, 1, 1, 1, 1, 0, 1, 1]],
+    [[1, 1, 1, 1, 3, 0, 0, 1],
+     [0, 1, 0, 0, 1, 1, 1, 1],
+     [0, 0, 0, 0, 1, 0, 0, 1],
+     [1, 1, 1, 1, 1, 0, 0, 1],
+     [0, 1, 0, 1, 0, 1, 1, 1],
+     [0, 1, 0, 0, 0, 1, 0, 1],
+     [1, 1, 1, 1, 2, 0, 1, 1],
+     [0, 1, 0, 0, 1, 1, 0, 1]],
+    [[1, 1, 1, 1, 1, 1, 1, 1],
+     [1, 0, 0, 1, 0, 1, 0, 1],
+     [1, 0, 1, 0, 1, 0, 0, 1],
+     [1, 0, 3, 1, 1, 1, 1, 1],
+     [1, 1, 0, 0, 1, 0, 1, 0],
+     [1, 0, 1, 0, 0, 2, 0, 1],
+     [1, 1, 1, 1, 1, 1, 1, 1],
+     [1, 0, 1, 0, 0, 1, 0, 1]],
+    [[1, 1, 1, 1, 1, 1, 1, 1],
+     [0, 0, 0, 0, 0, 0, 0, 1],
+     [1, 1, 1, 1, 1, 1, 1, 1],
+     [0, 1, 0, 0, 1, 0, 0, 1],
+     [1, 0, 1, 1, 0, 1, 1, 1],
+     [1, 0, 1, 0, 0, 1, 0, 0],
+     [1, 3, 1, 1, 1, 1, 1, 1],
+     [0, 1, 0, 1, 0, 2, 0, 1]],
+    [[0, 0, 1, 0, 1, 1, 1, 1],
+     [0, 1, 1, 0, 1, 0, 0, 1],
+     [1, 0, 1, 0, 1, 1, 0, 1],
+     [1, 1, 1, 0, 1, 0, 1, 1],
+     [1, 0, 0, 0, 0, 0, 0, 2],
+     [1, 1, 1, 0, 1, 1, 1, 1],
+     [0, 0, 1, 0, 1, 0, 1, 0],
+     [1, 1, 1, 1, 1, 0, 1, 3]],
+    [[1, 0, 0, 2, 0, 1, 0, 3],
+     [1, 1, 1, 1, 0, 1, 1, 1],
+     [1, 0, 0, 1, 0, 0, 0, 1],
+     [1, 0, 1, 1, 0, 1, 1, 1],
+     [1, 1, 0, 0, 1, 1, 0, 1],
+     [1, 0, 0, 1, 0, 1, 0, 1],
+     [1, 1, 1, 1, 1, 1, 0, 1],
+     [1, 0, 0, 1, 0, 1, 0, 1]],
+    [[1, 0, 2, 1, 1, 3, 1, 1],
+     [1, 1, 0, 0, 1, 0, 1, 0],
+     [1, 0, 1, 0, 1, 0, 1, 1],
+     [1, 1, 1, 1, 0, 0, 1, 0],
+     [0, 0, 1, 0, 1, 1, 1, 1],
+     [1, 0, 1, 0, 1, 0, 0, 1],
+     [1, 1, 1, 1, 1, 0, 0, 1],
+     [1, 0, 1, 0, 0, 1, 1, 1]],
+    [[1, 0, 1, 1, 0, 1, 1, 1],
+     [1, 0, 0, 1, 0, 1, 0, 2],
+     [1, 1, 1, 1, 0, 0, 0, 1],
+     [1, 0, 0, 0, 1, 1, 1, 1],
+     [1, 0, 0, 1, 0, 1, 0, 1],
+     [1, 1, 1, 1, 0, 1, 0, 1],
+     [0, 0, 0, 3, 0, 1, 0, 1],
+     [1, 1, 1, 1, 1, 1, 0, 1]]
+  ][BlocklyGames.LEVEL];
 
 /**
  * Measure maze dimensions and set sizes.
@@ -511,7 +497,6 @@ Maze.init = function() {
   var scale = 1 + (1 - (BlocklyGames.LEVEL / BlocklyGames.MAX_LEVEL)) / 3;
   BlocklyGames.workspace = Blockly.inject('blockly',
       {'media': 'third-party/blockly/media/',
-       'maxBlocks': Maze.MAX_BLOCKS,
        'rtl': rtl,
        'toolbox': toolbox,
        'trashcan': true,
@@ -529,7 +514,7 @@ Maze.init = function() {
       '  <block movable="' + (BlocklyGames.LEVEL != 1) + '" ' +
       'type="maze_moveForward" x="70" y="70"></block>' +
       '</xml>';
-  BlocklyInterface.loadBlocks(defaultXml, false);
+  BlocklyInterface.loadBlocks(defaultXml, true);
 
   // Locate the start and finish squares.
   for (var y = 0; y < Maze.ROWS; y++) {
@@ -550,34 +535,34 @@ Maze.init = function() {
   BlocklyGames.bindClick('runButton', Maze.runButtonClick);
   BlocklyGames.bindClick('resetButton', Maze.resetButtonClick);
 
-  if (BlocklyGames.LEVEL == 1) {
-    // Make connecting blocks easier for beginners.
-    Blockly.SNAP_RADIUS *= 2;
-  }
-  if (BlocklyGames.LEVEL == 10) {
-    if (!BlocklyGames.loadFromLocalStorage(BlocklyGames.NAME,
-                                          BlocklyGames.LEVEL)) {
-      // Level 10 gets an introductory modal dialog.
-      // Skip the dialog if the user has already won.
-      var content = document.getElementById('dialogHelpWallFollow');
-      var style = {
-        'width': '30%',
-        'left': '35%',
-        'top': '12em'
-      };
-      BlocklyDialogs.showDialog(content, null, false, true, style,
-          BlocklyDialogs.stopDialogKeyDown);
-      BlocklyDialogs.startDialogKeyDown();
-      setTimeout(BlocklyDialogs.abortOffer, 5 * 60 * 1000);
-    }
-  } else {
-    // All other levels get interactive help.  But wait 5 seconds for the
-    // user to think a bit before they are told what to do.
-    setTimeout(function() {
-      BlocklyGames.workspace.addChangeListener(Maze.levelHelp);
-      Maze.levelHelp();
-    }, 5000);
-  }
+  // if (BlocklyGames.LEVEL == 1) {
+  //   // Make connecting blocks easier for beginners.
+  //   Blockly.SNAP_RADIUS *= 2;
+  // }
+  // if (BlocklyGames.LEVEL == 10) {
+  //   if (!BlocklyGames.loadFromLocalStorage(BlocklyGames.NAME,
+  //                                         BlocklyGames.LEVEL)) {
+  //     // Level 10 gets an introductory modal dialog.
+  //     // Skip the dialog if the user has already won.
+  //     var content = document.getElementById('dialogHelpWallFollow');
+  //     var style = {
+  //       'width': '30%',
+  //       'left': '35%',
+  //       'top': '12em'
+  //     };
+  //     BlocklyDialogs.showDialog(content, null, false, true, style,
+  //         BlocklyDialogs.stopDialogKeyDown);
+  //     BlocklyDialogs.startDialogKeyDown();
+  //     setTimeout(BlocklyDialogs.abortOffer, 5 * 60 * 1000);
+  //   }
+  // } else {
+  //   // All other levels get interactive help.  But wait 5 seconds for the
+  //   // user to think a bit before they are told what to do.
+  //   setTimeout(function() {
+  //     BlocklyGames.workspace.addChangeListener(Maze.levelHelp);
+  //     Maze.levelHelp();
+  //   }, 5000);
+  // }
 
   // Add the spinning Pegman icon to the done dialog.
   // <img id="pegSpin" src="common/1x1.gif">
@@ -903,14 +888,14 @@ Maze.runButtonClick = function(e) {
   }
   BlocklyDialogs.hideDialog(false);
   // Only allow a single top block on level 1.
-  if (BlocklyGames.LEVEL == 1 &&
-      BlocklyGames.workspace.getTopBlocks().length > 1 &&
-      Maze.result != Maze.ResultType.SUCCESS &&
-      !BlocklyGames.loadFromLocalStorage(BlocklyGames.NAME,
-                                         BlocklyGames.LEVEL)) {
-    Maze.levelHelp();
-    return;
-  }
+  // if (BlocklyGames.LEVEL == 1 &&
+  //     BlocklyGames.workspace.getTopBlocks().length > 1 &&
+  //     Maze.result != Maze.ResultType.SUCCESS &&
+  //     !BlocklyGames.loadFromLocalStorage(BlocklyGames.NAME,
+  //                                        BlocklyGames.LEVEL)) {
+  //   Maze.levelHelp();
+  //   return;
+  // }
   var runButton = document.getElementById('runButton');
   var resetButton = document.getElementById('resetButton');
   // Ensure that Reset button is at least as wide as Run button.
@@ -930,32 +915,32 @@ Maze.runButtonClick = function(e) {
  * is retrieved from BlocklyGames.workspace.remainingCapacity().
  */
 Maze.updateCapacity = function() {
-  var cap = BlocklyGames.workspace.remainingCapacity();
-  var p = document.getElementById('capacity');
-  if (cap == Infinity) {
-    p.style.display = 'none';
-  } else {
-    p.style.display = 'inline';
-    p.innerHTML = '';
-    cap = Number(cap);
-    var capSpan = document.createElement('span');
-    capSpan.className = 'capacityNumber';
-    capSpan.appendChild(document.createTextNode(cap));
-    if (cap == 0) {
-      var msg = BlocklyGames.getMsg('Maze_capacity0');
-    } else if (cap == 1) {
-      var msg = BlocklyGames.getMsg('Maze_capacity1');
-    } else {
-      var msg = BlocklyGames.getMsg('Maze_capacity2');
-    }
-    var parts = msg.split(/%\d/);
-    for (var i = 0; i < parts.length; i++) {
-      p.appendChild(document.createTextNode(parts[i]));
-      if (i != parts.length - 1) {
-        p.appendChild(capSpan.cloneNode(true));
-      }
-    }
-  }
+  // var cap = BlocklyGames.workspace.remainingCapacity();
+  // var p = document.getElementById('capacity');
+  // if (cap == Infinity) {
+  //   p.style.display = 'none';
+  // } else {
+  //   p.style.display = 'inline';
+  //   p.innerHTML = '';
+  //   cap = Number(cap);
+  //   var capSpan = document.createElement('span');
+  //   capSpan.className = 'capacityNumber';
+  //   capSpan.appendChild(document.createTextNode(cap));
+  //   if (cap == 0) {
+  //     var msg = BlocklyGames.getMsg('Maze_capacity0');
+  //   } else if (cap == 1) {
+  //     var msg = BlocklyGames.getMsg('Maze_capacity1');
+  //   } else {
+  //     var msg = BlocklyGames.getMsg('Maze_capacity2');
+  //   }
+  //   var parts = msg.split(/%\d/);
+  //   for (var i = 0; i < parts.length; i++) {
+  //     p.appendChild(document.createTextNode(parts[i]));
+  //     if (i != parts.length - 1) {
+  //       p.appendChild(capSpan.cloneNode(true));
+  //     }
+  //   }
+  // }
 };
 
 /**
@@ -1077,10 +1062,10 @@ Maze.execute = function() {
 
   // Fast animation if execution is successful.  Slow otherwise.
   if (Maze.result == Maze.ResultType.SUCCESS) {
-    Maze.stepSpeed = 100;
+    Maze.stepSpeed = 10;
     Maze.log.push(['finish', null]);
   } else {
-    Maze.stepSpeed = 150;
+    Maze.stepSpeed = 10;
   }
 
   // Maze.log now contains a transcript of all the user's actions.
@@ -1152,8 +1137,9 @@ Maze.animate = function() {
       break;
     case 'finish':
       Maze.scheduleFinish(true);
+      Maze.saveToStorage();
       BlocklyInterface.saveToLocalStorage();
-      setTimeout(BlocklyDialogs.congratulations, 1000);
+      //setTimeout(BlocklyDialogs.congratulations, 1000);
   }
 
   Maze.pidList.push(setTimeout(Maze.animate, Maze.stepSpeed * 5));
