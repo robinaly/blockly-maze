@@ -48,6 +48,44 @@ BlocklyInterface.nextLevel = function() {
   }
 };
 
+/**
+ * Congratulates the user for completing the level and offers to
+ * direct them to the next level, if available.
+ */
+BlocklyDialogs.congratulations = function() {
+  var content = document.getElementById('dialogDone');
+  var style = {
+    width: '40%',
+    left: '30%',
+    top: '3em'
+  };
+
+  if (BlocklyGames.LEVEL < BlocklyGames.MAX_LEVEL) {
+    var text = BlocklyGames.getMsg('Games_nextLevel')
+        .replace('%1', BlocklyGames.LEVEL + 1);
+  } else {
+    var text = BlocklyGames.getMsg('Games_finalLevel');
+  }
+
+  var cancel = document.getElementById('doneCancel');
+  cancel.addEventListener('click', BlocklyDialogs.hideDialog, true);
+  cancel.addEventListener('touchend', BlocklyDialogs.hideDialog, true);
+  var ok = document.getElementById('doneOk');
+  ok.addEventListener('click', BlocklyInterface.nextLevel, true);
+  ok.addEventListener('touchend', BlocklyInterface.nextLevel, true);
+
+  BlocklyDialogs.showDialog(content, null, false, true, style,
+      function() {
+        document.body.removeEventListener('keydown',
+            BlocklyDialogs.congratulationsKeyDown, true);
+        });
+  document.body.addEventListener('keydown',
+      BlocklyDialogs.congratulationsKeyDown, true);
+
+  document.getElementById('dialogDoneText').textContent = text;
+};
+
+
 Maze.MAX_BLOCKS = [undefined, // Level 0.
     Infinity, Infinity, 2, 5, 5, 5, 5, 10, 7, 10][BlocklyGames.LEVEL];
 
@@ -450,32 +488,32 @@ Maze.init = function() {
   BlocklyInterface.init();
 
   // Setup the Pegman menu.
-  var pegmanImg = document.querySelector('#pegmanButton>img');
-  pegmanImg.style.backgroundImage = 'url(' + Maze.SKIN.sprite + ')';
-  var pegmanMenu = document.getElementById('pegmanMenu');
-  var handlerFactory = function(n) {
-    return function() {
-      Maze.changePegman(n);
-    };
-  };
-  for (var i = 0; i < Maze.SKINS.length; i++) {
-    if (i == Maze.SKIN_ID) {
-      continue;
-    }
-    var div = document.createElement('div');
-    var img = document.createElement('img');
-    img.src = 'common/1x1.gif';
-    img.style.backgroundImage = 'url(' + Maze.SKINS[i].sprite + ')';
-    div.appendChild(img);
-    pegmanMenu.appendChild(div);
-    Blockly.bindEvent_(div, 'mousedown', null, handlerFactory(i));
-  }
-  Blockly.bindEvent_(window, 'resize', null, Maze.hidePegmanMenu);
-  var pegmanButton = document.getElementById('pegmanButton');
-  Blockly.bindEvent_(pegmanButton, 'mousedown', null, Maze.showPegmanMenu);
-  var pegmanButtonArrow = document.getElementById('pegmanButtonArrow');
-  var arrow = document.createTextNode(Blockly.FieldDropdown.ARROW_CHAR);
-  pegmanButtonArrow.appendChild(arrow);
+  // var pegmanImg = document.querySelector('#pegmanButton>img');
+  // pegmanImg.style.backgroundImage = 'url(' + Maze.SKIN.sprite + ')';
+  // var pegmanMenu = document.getElementById('pegmanMenu');
+  // var handlerFactory = function(n) {
+  //   return function() {
+  //     Maze.changePegman(n);
+  //   };
+  // };
+  // for (var i = 0; i < Maze.SKINS.length; i++) {
+  //   if (i == Maze.SKIN_ID) {
+  //     continue;
+  //   }
+  //   var div = document.createElement('div');
+  //   var img = document.createElement('img');
+  //   img.src = 'common/1x1.gif';
+  //   img.style.backgroundImage = 'url(' + Maze.SKINS[i].sprite + ')';
+  //   div.appendChild(img);
+  //   pegmanMenu.appendChild(div);
+  //   Blockly.bindEvent_(div, 'mousedown', null, handlerFactory(i));
+  // }
+  // Blockly.bindEvent_(window, 'resize', null, Maze.hidePegmanMenu);
+  // var pegmanButton = document.getElementById('pegmanButton');
+  // Blockly.bindEvent_(pegmanButton, 'mousedown', null, Maze.showPegmanMenu);
+  // var pegmanButtonArrow = document.getElementById('pegmanButtonArrow');
+  // var arrow = document.createTextNode(Blockly.FieldDropdown.ARROW_CHAR);
+  // pegmanButtonArrow.appendChild(arrow);
 
   var rtl = BlocklyGames.isRtl();
   var blocklyDiv = document.getElementById('blockly');
@@ -584,180 +622,180 @@ Maze.init = function() {
  * @param {Blockly.Events.Abstract} opt_event Custom data for event.
  */
 Maze.levelHelp = function(opt_event) {
-  if (opt_event && opt_event.type == Blockly.Events.UI) {
-    // Just a change to highlighting or somesuch.
-    return;
-  } else if (Blockly.dragMode_ != 0) {
-    // Don't change helps during drags.
-    return;
-  } else if (Maze.result == Maze.ResultType.SUCCESS ||
-             BlocklyGames.loadFromLocalStorage(BlocklyGames.NAME,
-                                               BlocklyGames.LEVEL)) {
-    // The user has already won.  They are just playing around.
-    return;
-  }
-  var rtl = BlocklyGames.isRtl();
-  var userBlocks = Blockly.Xml.domToText(
-      Blockly.Xml.workspaceToDom(BlocklyGames.workspace));
-  var toolbar = BlocklyGames.workspace.flyout_.workspace_.getTopBlocks(true);
-  var content = null;
-  var origin = null;
-  var style = null;
-  if (BlocklyGames.LEVEL == 1) {
-    if (BlocklyGames.workspace.getAllBlocks().length < 2) {
-      content = document.getElementById('dialogHelpStack');
-      style = {'width': '370px', 'top': '130px'};
-      style[rtl ? 'right' : 'left'] = '215px';
-      origin = toolbar[0].getSvgRoot();
-    } else {
-      var topBlocks = BlocklyGames.workspace.getTopBlocks(true);
-      if (topBlocks.length > 1) {
-        var xml = [
-            '<xml>',
-              '<block type="maze_moveForward" x="10" y="10">',
-                '<next>',
-                  '<block type="maze_moveForward"></block>',
-                '</next>',
-              '</block>',
-            '</xml>'];
-        BlocklyInterface.injectReadonly('sampleOneTopBlock', xml);
-        content = document.getElementById('dialogHelpOneTopBlock');
-        style = {'width': '360px', 'top': '120px'};
-        style[rtl ? 'right' : 'left'] = '225px';
-        origin = topBlocks[0].getSvgRoot();
-      } else if (Maze.result == Maze.ResultType.UNSET) {
-        // Show run help dialog.
-        content = document.getElementById('dialogHelpRun');
-        style = {'width': '360px', 'top': '410px'};
-        style[rtl ? 'right' : 'left'] = '400px';
-        origin = document.getElementById('runButton');
-      }
-    }
-  } else if (BlocklyGames.LEVEL == 2) {
-    if (Maze.result != Maze.ResultType.UNSET &&
-        document.getElementById('runButton').style.display == 'none') {
-      content = document.getElementById('dialogHelpReset');
-      style = {'width': '360px', 'top': '410px'};
-      style[rtl ? 'right' : 'left'] = '400px';
-      origin = document.getElementById('resetButton');
-    }
-  } else if (BlocklyGames.LEVEL == 3) {
-    if (userBlocks.indexOf('maze_forever') == -1) {
-      if (BlocklyGames.workspace.remainingCapacity() == 0) {
-        content = document.getElementById('dialogHelpCapacity');
-        style = {'width': '430px', 'top': '310px'};
-        style[rtl ? 'right' : 'left'] = '50px';
-        origin = document.getElementById('capacityBubble');
-      } else {
-        content = document.getElementById('dialogHelpRepeat');
-        style = {'width': '360px', 'top': '360px'};
-        style[rtl ? 'right' : 'left'] = '425px';
-        origin = toolbar[3].getSvgRoot();
-      }
-    }
-  } else if (BlocklyGames.LEVEL == 4) {
-    if (BlocklyGames.workspace.remainingCapacity() == 0 &&
-        (userBlocks.indexOf('maze_forever') == -1 ||
-         BlocklyGames.workspace.getTopBlocks(false).length > 1)) {
-      content = document.getElementById('dialogHelpCapacity');
-      style = {'width': '430px', 'top': '310px'};
-      style[rtl ? 'right' : 'left'] = '50px';
-      origin = document.getElementById('capacityBubble');
-    } else {
-      var showHelp = true;
-      // Only show help if there is not a loop with two nested blocks.
-      var blocks = BlocklyGames.workspace.getAllBlocks();
-      for (var i = 0; i < blocks.length; i++) {
-        var block = blocks[i];
-        if (block.type != 'maze_forever') {
-          continue;
-        }
-        var j = 0;
-        while (block) {
-          var kids = block.getChildren();
-          block = kids.length ? kids[0] : null;
-          j++;
-        }
-        if (j > 2) {
-          showHelp = false;
-          break;
-        }
-      }
-      if (showHelp) {
-        content = document.getElementById('dialogHelpRepeatMany');
-        style = {'width': '360px', 'top': '360px'};
-        style[rtl ? 'right' : 'left'] = '425px';
-        origin = toolbar[3].getSvgRoot();
-      }
-    }
-  } else if (BlocklyGames.LEVEL == 5) {
-    if (Maze.SKIN_ID == 0 && !Maze.showPegmanMenu.activatedOnce) {
-      content = document.getElementById('dialogHelpSkins');
-      style = {'width': '360px', 'top': '60px'};
-      style[rtl ? 'left' : 'right'] = '20px';
-      origin = document.getElementById('pegmanButton');
-    }
-  } else if (BlocklyGames.LEVEL == 6) {
-    if (userBlocks.indexOf('maze_if') == -1) {
-      content = document.getElementById('dialogHelpIf');
-      style = {'width': '360px', 'top': '430px'};
-      style[rtl ? 'right' : 'left'] = '425px';
-      origin = toolbar[4].getSvgRoot();
-    }
-  } else if (BlocklyGames.LEVEL == 7) {
-    if (!Maze.levelHelp.initialized7_) {
-      // Create fake dropdown.
-      var span = document.createElement('span');
-      span.className = 'helpMenuFake';
-      var options =
-          [BlocklyGames.getMsg('Maze_pathAhead'),
-           BlocklyGames.getMsg('Maze_pathLeft'),
-           BlocklyGames.getMsg('Maze_pathRight')];
-      var prefix = Blockly.commonWordPrefix(options);
-      var suffix = Blockly.commonWordSuffix(options);
-      if (suffix) {
-        var option = options[0].slice(prefix, -suffix);
-      } else {
-        var option = options[0].substring(prefix);
-      }
-      // Add dropdown arrow: "option ▾" (LTR) or "▾ אופציה" (RTL)
-      span.textContent = option + ' ' + Blockly.FieldDropdown.ARROW_CHAR;
-      // Inject fake dropdown into message.
-      var container = document.getElementById('helpMenuText');
-      var msg = container.textContent;
-      container.textContent = '';
-      var parts = msg.split(/%\d/);
-      for (var i = 0; i < parts.length; i++) {
-        container.appendChild(document.createTextNode(parts[i]));
-        if (i != parts.length - 1) {
-          container.appendChild(span.cloneNode(true));
-        }
-      }
-      Maze.levelHelp.initialized7_ = true;
-    }
-    // The hint says to change from 'ahead', but keep the hint visible
-    // until the user chooses 'right'.
-    if (userBlocks.indexOf('isPathRight') == -1) {
-      content = document.getElementById('dialogHelpMenu');
-      style = {'width': '360px', 'top': '430px'};
-      style[rtl ? 'right' : 'left'] = '425px';
-      origin = toolbar[4].getSvgRoot();
-    }
-  } else if (BlocklyGames.LEVEL == 9) {
-    if (userBlocks.indexOf('maze_ifElse') == -1) {
-      content = document.getElementById('dialogHelpIfElse');
-      style = {'width': '360px', 'top': '305px'};
-      style[rtl ? 'right' : 'left'] = '425px';
-      origin = toolbar[5].getSvgRoot();
-    }
-  }
-  if (content) {
-    if (content.parentNode != document.getElementById('dialog')) {
-      BlocklyDialogs.showDialog(content, origin, true, false, style, null);
-    }
-  } else {
-    BlocklyDialogs.hideDialog(false);
-  }
+  // if (opt_event && opt_event.type == Blockly.Events.UI) {
+ //    // Just a change to highlighting or somesuch.
+ //    return;
+ //  } else if (Blockly.dragMode_ != 0) {
+ //    // Don't change helps during drags.
+ //    return;
+ //  } else if (Maze.result == Maze.ResultType.SUCCESS ||
+ //             BlocklyGames.loadFromLocalStorage(BlocklyGames.NAME,
+ //                                               BlocklyGames.LEVEL)) {
+ //    // The user has already won.  They are just playing around.
+ //    return;
+ //  }
+ //  var rtl = BlocklyGames.isRtl();
+ //  var userBlocks = Blockly.Xml.domToText(
+ //      Blockly.Xml.workspaceToDom(BlocklyGames.workspace));
+ //  var toolbar = BlocklyGames.workspace.flyout_.workspace_.getTopBlocks(true);
+ //  var content = null;
+ //  var origin = null;
+ //  var style = null;
+ //  if (BlocklyGames.LEVEL == 1) {
+ //    if (BlocklyGames.workspace.getAllBlocks().length < 2) {
+ //      // content = document.getElementById('dialogHelpStack');
+ //      // style = {'width': '370px', 'top': '130px'};
+ //      // style[rtl ? 'right' : 'left'] = '215px';
+ //      // origin = toolbar[0].getSvgRoot();
+ //    } else {
+ //      var topBlocks = BlocklyGames.workspace.getTopBlocks(true);
+ //      if (topBlocks.length > 1) {
+ //        var xml = [
+ //            '<xml>',
+ //              '<block type="maze_moveForward" x="10" y="10">',
+ //                '<next>',
+ //                  '<block type="maze_moveForward"></block>',
+ //                '</next>',
+ //              '</block>',
+ //            '</xml>'];
+ //        BlocklyInterface.injectReadonly('sampleOneTopBlock', xml);
+ //        content = document.getElementById('dialogHelpOneTopBlock');
+ //        style = {'width': '360px', 'top': '120px'};
+ //        style[rtl ? 'right' : 'left'] = '225px';
+ //        origin = topBlocks[0].getSvgRoot();
+ //      } else if (Maze.result == Maze.ResultType.UNSET) {
+ //        // Show run help dialog.
+ //        // content = document.getElementById('dialogHelpRun');
+ //        // style = {'width': '360px', 'top': '410px'};
+ //        // style[rtl ? 'right' : 'left'] = '400px';
+ //        // origin = document.getElementById('runButton');
+ //      }
+ //    }
+ //  } else if (BlocklyGames.LEVEL == 2) {
+ //    if (Maze.result != Maze.ResultType.UNSET &&
+ //        document.getElementById('runButton').style.display == 'none') {
+ //      content = document.getElementById('dialogHelpReset');
+ //      // style = {'width': '360px', 'top': '410px'};
+ //      // style[rtl ? 'right' : 'left'] = '400px';
+ //      // origin = document.getElementById('resetButton');
+ //    }
+ //  } else if (BlocklyGames.LEVEL == 3) {
+ //    if (userBlocks.indexOf('maze_forever') == -1) {
+ //      if (BlocklyGames.workspace.remainingCapacity() == 0) {
+ //        content = document.getElementById('dialogHelpCapacity');
+ //        style = {'width': '430px', 'top': '310px'};
+ //        style[rtl ? 'right' : 'left'] = '50px';
+ //        origin = document.getElementById('capacityBubble');
+ //      } else {
+ //        // content = document.getElementById('dialogHelpRepeat');
+ //        // style = {'width': '360px', 'top': '360px'};
+ //        // style[rtl ? 'right' : 'left'] = '425px';
+ //        // origin = toolbar[3].getSvgRoot();
+ //      }
+ //    }
+ //  } else if (BlocklyGames.LEVEL == 4) {
+ //    if (BlocklyGames.workspace.remainingCapacity() == 0 &&
+ //        (userBlocks.indexOf('maze_forever') == -1 ||
+ //         BlocklyGames.workspace.getTopBlocks(false).length > 1)) {
+ //      content = document.getElementById('dialogHelpCapacity');
+ //      style = {'width': '430px', 'top': '310px'};
+ //      style[rtl ? 'right' : 'left'] = '50px';
+ //      origin = document.getElementById('capacityBubble');
+ //    } else {
+ //      var showHelp = true;
+ //      // Only show help if there is not a loop with two nested blocks.
+ //      var blocks = BlocklyGames.workspace.getAllBlocks();
+ //      for (var i = 0; i < blocks.length; i++) {
+ //        var block = blocks[i];
+ //        if (block.type != 'maze_forever') {
+ //          continue;
+ //        }
+ //        var j = 0;
+ //        while (block) {
+ //          var kids = block.getChildren();
+ //          block = kids.length ? kids[0] : null;
+ //          j++;
+ //        }
+ //        if (j > 2) {
+ //          showHelp = false;
+ //          break;
+ //        }
+ //      }
+ //      // if (showHelp) {
+ //      //   content = document.getElementById('dialogHelpRepeatMany');
+ //      //   style = {'width': '360px', 'top': '360px'};
+ //      //   style[rtl ? 'right' : 'left'] = '425px';
+ //      //   origin = toolbar[3].getSvgRoot();
+ //      // }
+ //    }
+ //  } else if (BlocklyGames.LEVEL == 5) {
+ //    if (Maze.SKIN_ID == 0 && !Maze.showPegmanMenu.activatedOnce) {
+ //      content = document.getElementById('dialogHelpSkins');
+ //      style = {'width': '360px', 'top': '60px'};
+ //      style[rtl ? 'left' : 'right'] = '20px';
+ //      origin = document.getElementById('pegmanButton');
+ //    }
+ //  } else if (BlocklyGames.LEVEL == 6) {
+ //    if (userBlocks.indexOf('maze_if') == -1) {
+ //      content = document.getElementById('dialogHelpIf');
+ //      style = {'width': '360px', 'top': '430px'};
+ //      style[rtl ? 'right' : 'left'] = '425px';
+ //      origin = toolbar[4].getSvgRoot();
+ //    }
+ //  } else if (BlocklyGames.LEVEL == 7) {
+ //    if (!Maze.levelHelp.initialized7_) {
+ //      // Create fake dropdown.
+ //      var span = document.createElement('span');
+ //      span.className = 'helpMenuFake';
+ //      var options =
+ //          [BlocklyGames.getMsg('Maze_pathAhead'),
+ //           BlocklyGames.getMsg('Maze_pathLeft'),
+ //           BlocklyGames.getMsg('Maze_pathRight')];
+ //      var prefix = Blockly.commonWordPrefix(options);
+ //      var suffix = Blockly.commonWordSuffix(options);
+ //      if (suffix) {
+ //        var option = options[0].slice(prefix, -suffix);
+ //      } else {
+ //        var option = options[0].substring(prefix);
+ //      }
+ //      // Add dropdown arrow: "option ▾" (LTR) or "▾ אופציה" (RTL)
+ //      span.textContent = option + ' ' + Blockly.FieldDropdown.ARROW_CHAR;
+ //      // Inject fake dropdown into message.
+ //      var container = document.getElementById('helpMenuText');
+ //      var msg = container.textContent;
+ //      container.textContent = '';
+ //      var parts = msg.split(/%\d/);
+ //      for (var i = 0; i < parts.length; i++) {
+ //        container.appendChild(document.createTextNode(parts[i]));
+ //        if (i != parts.length - 1) {
+ //          container.appendChild(span.cloneNode(true));
+ //        }
+ //      }
+ //      Maze.levelHelp.initialized7_ = true;
+ //    }
+ //    // The hint says to change from 'ahead', but keep the hint visible
+ //    // until the user chooses 'right'.
+ //    if (userBlocks.indexOf('isPathRight') == -1) {
+ //      content = document.getElementById('dialogHelpMenu');
+ //      style = {'width': '360px', 'top': '430px'};
+ //      style[rtl ? 'right' : 'left'] = '425px';
+ //      origin = toolbar[4].getSvgRoot();
+ //    }
+ //  } else if (BlocklyGames.LEVEL == 9) {
+ //    if (userBlocks.indexOf('maze_ifElse') == -1) {
+ //      content = document.getElementById('dialogHelpIfElse');
+ //      style = {'width': '360px', 'top': '305px'};
+ //      style[rtl ? 'right' : 'left'] = '425px';
+ //      origin = toolbar[5].getSvgRoot();
+ //    }
+ //  }
+ //  if (content) {
+ //    if (content.parentNode != document.getElementById('dialog')) {
+ //      BlocklyDialogs.showDialog(content, origin, true, false, style, null);
+ //    }
+ //  } else {
+ //    BlocklyDialogs.hideDialog(false);
+ //  }
 };
 
 /**
@@ -777,11 +815,12 @@ Maze.changePegman = function(newSkin) {
  */
 Maze.saveToStorage = function() {
   // MSIE 11 does not support sessionStorage on file:// URLs.
-  if (typeof Blockly != undefined && window.sessionStorage) {
-    var xml = Blockly.Xml.workspaceToDom(BlocklyGames.workspace);
-    var text = Blockly.Xml.domToText(xml);
-    window.sessionStorage.loadOnceBlocks = text;
-  }
+  BlocklyInterface.saveToLocalStorage();
+  // if (typeof Blockly != undefined && window.sessionStorage) {
+  //   var xml = Blockly.Xml.workspaceToDom(BlocklyGames.workspace);
+  //   var text = Blockly.Xml.domToText(xml);
+  //   window.sessionStorage.loadOnceBlocks = text;
+  // }
 };
 
 /**
@@ -957,7 +996,7 @@ Maze.resetButtonClick = function(e) {
   document.getElementById('resetButton').style.display = 'none';
   BlocklyGames.workspace.traceOn(false);
   Maze.reset(false);
-  Maze.levelHelp();
+  //Maze.levelHelp();
 };
 
 /**
@@ -1081,7 +1120,7 @@ Maze.animate = function() {
   var action = Maze.log.shift();
   if (!action) {
     BlocklyInterface.highlight(null);
-    Maze.levelHelp();
+    //Maze.levelHelp();
     return;
   }
   BlocklyInterface.highlight(action[1]);
@@ -1139,7 +1178,8 @@ Maze.animate = function() {
       Maze.scheduleFinish(true);
       Maze.saveToStorage();
       BlocklyInterface.saveToLocalStorage();
-      //setTimeout(BlocklyDialogs.congratulations, 1000);
+      //BlocklyInterface.nextLevel();
+      setTimeout(BlocklyDialogs.congratulations, 1000);
   }
 
   Maze.pidList.push(setTimeout(Maze.animate, Maze.stepSpeed * 5));
